@@ -1,7 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 8080;
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 
@@ -20,7 +22,6 @@ app.get('/urls.json', (req, res) => {
 
 app.get('/urls', (req, res) => {
   const templateVars = {
-    shortUrls: Object.keys(urlDatabase),
     urls: urlDatabase,
   };
   res.render('urls_index', templateVars);
@@ -28,6 +29,11 @@ app.get('/urls', (req, res) => {
 
 app.get('/urls/new', (req, res) => {
   res.render('urls_new');
+});
+
+app.post('/urls', (req, res) => {
+  console.log(req.body);
+  res.send('Ok');
 });
 
 app.get('/urls/:shortURL', (req, res) => {
@@ -46,3 +52,5 @@ app.get('/hello', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+
+function generateRandomString() {}
