@@ -9,6 +9,10 @@
   <title>TinyApp</title>
 </head>
 <body style="font-size:20px; padding:50px;">
-    <p><%=urls.b2xVn2%></p>
+  <header><% include ./partials/_header %></header>
+  <h2>My URLs</h2>
+  <% shortUrls.forEach(function(item){ %>
+  <li><b><%= item %></b>: <%= urls[item]%></li>
+  <% }); %>
 </body>
 </html>
