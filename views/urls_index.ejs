@@ -16,6 +16,7 @@
       <tr>
         <form method="POST" action="/urls/<%=item%>/delete">
           <th><b><%= item %></b>&nbsp;&rarr;&nbsp; <%= urls[item]%></th>
+          <th style="padding:20px;"><a href="/urls/<%=item%>">Edit</a></th>
           <th style="padding: 20px;"><button type="submit" >Delete</button></th>
         </form>
       </tr>
