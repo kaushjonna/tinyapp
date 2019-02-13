@@ -11,8 +11,15 @@
 <body style="font-size:20px; padding:50px;">
   <header><% include ./partials/_header %></header>
   <h2>My URLs</h2>
-  <% Object.keys(urls).forEach(function(item){ %>
-  <li><b><%= item %></b>: <%= urls[item]%></li>
-  <% }); %>
+  <table>
+    <% Object.keys(urls).forEach(function(item){ %>
+      <tr>
+        <form method="POST" action="/urls/<%=item%>/delete">
+          <th><b><%= item %></b>&nbsp;&rarr;&nbsp; <%= urls[item]%></th>
+          <th style="padding: 20px;"><button type="submit" >Delete</button></th>
+        </form>
+      </tr>
+    <% }); %>
+  </table>
 </body>
 </html>
