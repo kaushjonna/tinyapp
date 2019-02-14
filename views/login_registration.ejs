@@ -8,15 +8,25 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <title>TinyApp</title>
 </head>
-<body style="font-size:20px; padding:50px;">
-  <h1> REGISTER </h1>
-  <form method = 'POST' action= '/register'>
-    <label for="email">E-mail address: </label>
-    <input type="email" name="email" class="form-control">
-    <label for="password">Password</label>
-    <input type="password" name="password" class="form-control">
-    <br/>
-    <button type="submit">Register!</button>
-  </form>
+<body style="background-image: url(https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2866&q=80)">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5 jumbotron" style="margin:5em auto; background-color: rgba(245,245,245,0.9);">
+        <h1 style="margin: auto; text-align:center; padding: 1em;">Register</h1>
+        <form method = 'POST' action= '/register'>
+          <label for="email">E-mail address: </label>
+          <input type="email" name="email" class="form-control">
+          <label for="password">Password: </label>
+          <input type="password" name="password" class="form-control">
+          <br/>
+          <div style="text-align: center;">
+            <button type="submit" class="btn btn-primary" style="width: 49%; ">Register</button>
+            <a class="btn btn-outline-primary" href="/login" style="width: 49%; ">Login</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
+

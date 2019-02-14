@@ -1,11 +1,15 @@
-<h1> TinyApp  </h1>
-<a href="../urls">URLs</a> | <a href="../urls/new">Create New TinyURL</a><br/>
+<body>
+  <div style ="width: 100%; background-color: lightblue; height: 8em; padding-top: 2em; padding-bottom: 2em;">
+    <h1 style="text-align: center;"> TinyApp  </h1>
+    <div style="float: left; margin-left: 2em;"><a href="../urls">URLs</a> | <a href="../urls/new">Create New TinyURL</a></div>
 
-<%if(user){%>
-<p>Logged in as: <b><%=user.email%></b></p>
-<form class="inline-form" method="POST" action='/logout'>
-  <button type="submit" class="btn btn-primary">Logout</button>
-</form>
-<%} else {%>
-<a href="/register">Register</a> | <a href="/login">Login</a>
-<%}%>
+    <%if(user){%>
+    <p>Logged in as: <b><%=user.email%></b></p>
+    <form class="inline-form" method="POST" action='/logout'>
+      <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
+    <%} else {%>
+    <div style="float: right; margin-right:2em;"><a href="/register">Register</a> | <a href="/login">Login</a></div>
+    <%}%>
+  </div>
+</body>

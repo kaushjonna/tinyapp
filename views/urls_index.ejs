@@ -6,21 +6,24 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <title>TinyApp</title>
 </head>
-<body style="font-size:20px; padding:50px;">
+<body style="">
   <header><% include ./partials/_header %></header>
-  <h2>My URLs</h2>
-  <table>
-    <% Object.keys(urls).forEach(function(item){ %>
-      <tr>
-        <form method="POST" action="/urls/<%=item%>/delete">
-          <th><b><%= item %></b>&nbsp;&rarr;&nbsp; <%= urls[item]%></th>
-          <th style="padding:20px;"><a href="/urls/<%=item%>">Edit</a></th>
-          <th style="padding: 20px;"><button type="submit" >Delete</button></th>
-        </form>
-      </tr>
-    <% }); %>
-  </table>
+  <div class="col-md-8 jumborton" style="margin:4em auto; padding:auto; ">
+    <h2 style="text-align:center;">My URLs</h2>
+    <table >
+      <% Object.keys(urls).forEach(function(item){ %>
+        <tr>
+          <form method="POST" action="/urls/<%=item%>/delete">
+            <th><b><%= item %></b>&nbsp;&rarr;&nbsp; <%= urls[item]['url']%></th>
+            <th style="padding:20px;"><a href="/urls/<%=item%>"><i class="fas fa-edit"></i></a></th>
+            <th style="padding: 20px;"><button class="btn btn-danger" type="submit"><i class="fas fa-trash-alt"></i></button></th>
+          </form>
+        </tr>
+      <% }); %>
+    </table>
+  </div>
 </body>
 </html>
