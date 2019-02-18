@@ -126,6 +126,11 @@ app.post('/logout', (req, res) => {
   res.redirect('/');
 });
 
+app.post('/urls', (req, res) => {
+  if (req.session.username) {
+    console.log(`${req.session.username} is logged in`);
+  }
+});
 
 //Spin up server
 app.listen(PORT, () => {
