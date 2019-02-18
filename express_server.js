@@ -51,11 +51,16 @@ app.get('/urls.json', (req, res) => {
 // urls page
 app.get('/urls', (req, res) => {
   const currUser = req.session.username;
-  console.log('urls: ', users[currUser].email);
-  const userEmail = users[currUser].email;
+  if (currUser) {
+    var userEmail = users[currUser].email;
+    var userBase = getUrls(currUser);
+  } else {
+    var userEmail = "";
+  }
   console.log('email:', userEmail);
   const templateVars = {
     user: userEmail,
+    urls: userBase
   };
   res.render('urls_index', templateVars);
 });
@@ -116,7 +121,7 @@ app.post('/login', (req, res) => {
 
 //Logout Post, destroys session and redirects page.
 app.post('/logout', (req, res) => {
-  res.session = null;
+  req.session = null;
   console.log('Logout!');
   res.redirect('/');
 });
@@ -142,4 +147,14 @@ const getID = (email) => {
     }
   }
   return false;
+};
+
+const getUrls = (user) => {
+  const userBase = {};
+  for (let i in urlDatabase) {
+    if (user === urlDatabase[i].user) {
+      userBase[i] = urlDatabase[i].url;
+    }
+  }
+  return userBase;
 };
