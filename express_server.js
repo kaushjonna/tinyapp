@@ -50,9 +50,10 @@ app.get('/urls.json', (req, res) => {
 
 // urls page
 app.get('/urls', (req, res) => {
-  const currUser = req.session.user;
-  console.log(currUser);
-  const userEmail = getID(currUser)[1];
+  const currUser = req.session.username;
+  console.log('urls: ', users[currUser].email);
+  const userEmail = users[currUser].email;
+  console.log('email:', userEmail);
   const templateVars = {
     user: userEmail,
   };
@@ -109,12 +110,14 @@ app.post('/login', (req, res) => {
     req.session.username = user[0];
     console.log('success!')
   }
-  console.log(req.session.username);
+  console.log("username: ", req.session.username);
   res.redirect('/urls');
 });
 
 //Logout Post, destroys session and redirects page.
 app.post('/logout', (req, res) => {
+  res.session = null;
+  console.log('Logout!');
   res.redirect('/');
 });
 
@@ -134,6 +137,7 @@ const userID = () => {
 const getID = (email) => {
   for (let i in users) {
     if (email === users[i].email) {
+      console.log(`found at ${i}`)
       return [users[i].id, users[i].email];
     }
   }

@@ -1,5 +1,8 @@
 <%if(user){%>
 <p><%=user%></p>
+<form method="POST" action="logout">
+  <button type="submit">Log Out!</button>
+</form>
 <%} else {%>
 <p>Please log in!</p>
 <%}%>
