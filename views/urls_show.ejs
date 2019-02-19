@@ -11,9 +11,9 @@
 </head>
 <body style="">
   <header><% include ./partials/_header %></header>
-  <form method="POST" action='/urls'>
+  <form method="POST" action='/urls/<%=short%>'>
     <label for="longURL">URL</label>
-    <input type="text" placeholder=<%=long%>>
+    <input type="text" name="longURL" placeholder=<%=long%>>
     <button type="submit">Create!</button>
   </form>
 </body>

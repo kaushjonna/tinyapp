@@ -83,12 +83,16 @@ app.get('/urls/new', (req, res) => {
 
 // Url Edit page
 app.get('/urls/:shortURL', (req, res) => {
-  const templateVars = {
-    user: users[req.session.username].email,
-    short: req.params.shortURL,
-    long: urlDatabase[req.params.shortURL].url
-  };
-  res.render('urls_show', templateVars);
+  if (req.session.username && urlDatabase[req.params.shortURL].user === req.session.username) {
+    const templateVars = {
+      user: users[req.session.username].email,
+      short: req.params.shortURL,
+      long: urlDatabase[req.params.shortURL].url
+    };
+    res.render('urls_show', templateVars);
+  } else {
+    res.redirect('/login?alert=true')
+  }
 });
 
 // Register page
@@ -138,7 +142,7 @@ app.post('/logout', (req, res) => {
   res.redirect('/urls');
 });
 
-//Creates new shortURL
+//Creates new shortURL POST
 app.post('/urls', (req, res) => {
   if (req.session.username) {
     console.log(`${req.session.username} is logged in`);
@@ -152,7 +156,11 @@ app.post('/urls', (req, res) => {
   }
 });
 
-//Creates new 
+//Edits existing URL POST 
+app.post('/urls/:shortURL', (req, res) => {
+  urlDatabase[req.params.shortURL].url = req.body.longURL;
+  res.redirect('/urls')
+});
 
 //Spin up server
 app.listen(PORT, () => {
