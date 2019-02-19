@@ -84,6 +84,7 @@ app.get('/urls/new', (req, res) => {
 // Url Edit page
 app.get('/urls/:shortURL', (req, res) => {
   const templateVars = {
+    user: users[req.session.username].email,
     short: req.params.shortURL,
     long: urlDatabase[req.params.shortURL].url
   };
@@ -137,6 +138,7 @@ app.post('/logout', (req, res) => {
   res.redirect('/urls');
 });
 
+//Creates new shortURL
 app.post('/urls', (req, res) => {
   if (req.session.username) {
     console.log(`${req.session.username} is logged in`);
@@ -149,6 +151,8 @@ app.post('/urls', (req, res) => {
     res.redirect('/login?alert=true');
   }
 });
+
+//Creates new 
 
 //Spin up server
 app.listen(PORT, () => {
