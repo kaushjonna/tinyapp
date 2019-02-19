@@ -52,6 +52,14 @@ app.get('/urls.json', (req, res) => {
 
 // urls page
 app.get('/urls', (req, res) => {
+  const templateVars = {
+    user: userEmail,
+    urls: userBase,
+  };
+  console.log("check: ", req.session.username);
+  if (!req.session.username) {
+    res.redirect('/login?alert=true');
+  }
   const currUser = req.session.username;
   console.log(currUser);
   if (currUser) {
@@ -62,10 +70,6 @@ app.get('/urls', (req, res) => {
     var userEmail = "";
   }
   console.log('email:', userEmail);
-  const templateVars = {
-    user: userEmail,
-    urls: userBase,
-  };
   res.render('urls_index', templateVars);
 });
 
