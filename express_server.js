@@ -17,11 +17,13 @@ app.use(cookieSession({
 app.set('view engine', 'ejs');
 
 //Database Objects
+//url database
 const urlDatabase = {
   'b2xVn2': { url: 'http://www.lighthouselabs.ca', user: 'abcd' },
   '9sm5xK': { url: 'http://www.google.com', user: 'user2' }
 };
 
+//user database
 const users = {
   abcd: {
     id: 'abcd',
@@ -45,7 +47,7 @@ app.get('/', (req, res) => {
 
 //url Database API
 app.get('/urls.json', (req, res) => {
-  res.json(users);
+  res.json(urlDatabase);
 });
 
 // urls page
@@ -110,6 +112,13 @@ app.get('/login', (req, res) => {
     alert: req.query.alert,
   };
   res.render('login', templateVars);
+});
+
+//Redirect
+app.get('/u/:shortURL', (req, res) => {
+  const short = req.params.shortURL;
+  const long = urlDatabase[short].url;
+  res.redirect(long);
 });
 
 // POST Handlers
@@ -184,6 +193,7 @@ const getID = (email) => {
   return false;
 };
 
+//returns the urls registered to user given userid
 const getUrls = (user) => {
   const userBase = {};
   for (let i in urlDatabase) {
