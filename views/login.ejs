@@ -11,6 +11,9 @@
 </head>
 <body style="">
   <header><% include ./partials/_header %></header>
+  <%if(alert){%>
+    <p>Please login to access app.</p>
+  <%}%>
   <form method="POST" action='/login'>
     <label for="email">Email Address: </label>
     <input type="email" name="email" class="form-control">

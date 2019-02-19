@@ -11,5 +11,8 @@
 </head>
 <body style="">
   <header><% include ./partials/_header %></header>
+  <%for(let i in urls){%>
+    <%=i%> --> <%=urls[i]%><br/>
+  <%};%>
 </body>
 </html>

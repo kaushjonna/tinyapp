@@ -45,36 +45,47 @@ app.get('/', (req, res) => {
 
 //url Database API
 app.get('/urls.json', (req, res) => {
-  res.json(urlDatabase);
+  res.json(users);
 });
 
 // urls page
 app.get('/urls', (req, res) => {
   const currUser = req.session.username;
+  console.log(currUser);
   if (currUser) {
     var userEmail = users[currUser].email;
     var userBase = getUrls(currUser);
+    console.log('userbase: ', userBase);
   } else {
     var userEmail = "";
   }
   console.log('email:', userEmail);
   const templateVars = {
     user: userEmail,
-    urls: userBase
+    urls: userBase,
   };
   res.render('urls_index', templateVars);
 });
 
 // create new url
 app.get('/urls/new', (req, res) => {
+  if (!req.session.username) {
+    res.redirect('/login?alert=true');
+  }
+  const username = users[req.session.username].email;
+  console.log('new: ', username);
   const templateVars = {
+    user: username,
   };
+  console.log(username);
   res.render('urls_new', templateVars);
 });
 
 // Url Edit page
 app.get('/urls/:shortURL', (req, res) => {
   const templateVars = {
+    short: req.params.shortURL,
+    long: urlDatabase[req.params.shortURL].url
   };
   res.render('urls_show', templateVars);
 });
@@ -91,6 +102,7 @@ app.get('/register', (req, res) => {
 app.get('/login', (req, res) => {
   const templateVars = {
     user: '',
+    alert: req.query.alert,
   };
   res.render('login', templateVars);
 });
@@ -113,9 +125,8 @@ app.post('/login', (req, res) => {
   console.log('login: ', user[0]);
   if (bcrypt.compareSync(req.body.password, users[user[0]].password)) {
     req.session.username = user[0];
-    console.log('success!')
+    console.log('success!');
   }
-  console.log("username: ", req.session.username);
   res.redirect('/urls');
 });
 
@@ -123,12 +134,19 @@ app.post('/login', (req, res) => {
 app.post('/logout', (req, res) => {
   req.session = null;
   console.log('Logout!');
-  res.redirect('/');
+  res.redirect('/urls');
 });
 
 app.post('/urls', (req, res) => {
   if (req.session.username) {
     console.log(`${req.session.username} is logged in`);
+    const shortCode = userID();
+    console.log(shortCode);
+    urlDatabase[shortCode] = { url: req.body.longURL, user: req.session.username };
+    console.log('url:', urlDatabase[shortCode]);
+    res.redirect('/urls');
+  } else {
+    res.redirect('/login?alert=true');
   }
 });
 
