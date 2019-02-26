@@ -1,9 +1,13 @@
+<nav class="navbar navbar-light bg-light">
 <%if(user){%>
-<p><%=user%></p>
-<form method="POST" action="/logout">
-  <button type="submit">Log Out!</button>
-</form>
-<span><a href="/urls/new">Create New URL</a></span>
+<a class='btn btn-success' href="/urls">Logged in as <%=user%></a>
+<span><a href="/urls/new" class="btn btn-primary">Create New URL</a></span>
+<form method="POST" action="/logout"><button type="submit" class="btn btn-warning">Log Out!</button></form>
 <%} else {%>
-<span><a href="/urls">Home</a> | <a href="/login">Login</a> | <a href="/register">Register</a></span>
+<ul class="nav justify-content-center">
+  <li class="nav-item"><a class="nav-link" href="/urls">Home</a></li>
+  <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+  <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+</ul>
 <%}%>
+</nav>

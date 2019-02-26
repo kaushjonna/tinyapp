@@ -11,10 +11,13 @@
 </head>
 <body style="">
   <header><% include ./partials/_header %></header>
-  <form method="POST" action='/urls/<%=short%>'>
-    <label for="longURL">URL</label>
-    <input type="text" name="longURL" placeholder=<%=long%>>
-    <button type="submit">Create!</button>
-  </form>
+  <div class="jumbotron" style="width:60%; margin-left: auto; margin-right: auto; margin-top: 5em; text-align: center;">
+    <h1 style="margin:2em 0;"> EDIT URL for <%=short.toUpperCase();%> </h1>
+    <form style="display: flex;"  method="POST" action='/urls/<%=short%>'>
+    <h4 style="line-height:2.5rem"><%=short.toUpperCase();%>: </h4>
+      <input style="width: 60%; margin: 0 2em;" type="text" class="form-control" name="longURL" placeholder=<%=long%>>
+      <button style = "width: 30%;"type="submit" class="btn btn-success mb-2">Change!</button>
+    </form>
+  </div>
 </body>
 </html>

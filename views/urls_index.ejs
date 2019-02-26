@@ -25,7 +25,7 @@
           <tr>
             <th scope="row"><%=i%></th>
             <td><%=urls[i]%><br/></td>
-            <td><form method= 'POST' action="/urls/<%=i%>/delete"><button type="submit"><i class="fas fa-trash-alt"></i></button>&nbsp;<a href='/urls/<%=i%>'><i class="fas fa-edit"></i></a></form></td>
+            <td><form method= 'POST' action="/urls/<%=i%>/delete"><a href='/urls/<%=i%>' class="btn btn-primary"><i class="fas fa-edit"></i></a>&nbsp;<button class="btn btn-danger" type="submit"><i class="fas fa-trash-alt"></i></button></form></td>
           </tr>
         <%};%>
       </tbody>

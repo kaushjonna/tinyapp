@@ -181,6 +181,8 @@ app.post('/urls/:shortURL', (req, res) => {
   res.redirect('/urls')
 });
 
+
+//Deletes existing url
 app.post('/urls/:shortURL/delete', (req, res) => {
 
   if (req.session.username) {
