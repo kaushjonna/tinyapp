@@ -11,8 +11,25 @@
 </head>
 <body style="">
   <header><% include ./partials/_header %></header>
-  <%for(let i in urls){%>
-    <%=i%> --> <%=urls[i]%><br/>
-  <%};%>
+  <div class="jumbotron col-md-6" style="margin: 0 auto; background-color: #eee;">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">shortURL</th>
+          <th scope="col">longURL</th>
+          <th scope="col">Edit/Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%for(let i in urls){%>
+          <tr>
+            <th scope="row"><%=i%></th>
+            <td><%=urls[i]%><br/></td>
+            <td><form method= 'POST' action="/urls/<%=i%>/delete"><button type="submit"><i class="fas fa-trash-alt"></i></button>&nbsp;<button><i class="fas fa-edit"></i></button></form></td>
+          </tr>
+        <%};%>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>

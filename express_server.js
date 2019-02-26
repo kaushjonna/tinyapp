@@ -42,7 +42,11 @@ const users = {
 
 //Main Home Page
 app.get('/', (req, res) => {
-  res.send('Hello, welcome to TinyApp!')
+  if (!req.session.username) {
+    res.redirect('/login?alert=true');
+  } else {
+    res.redirect('/urls');
+  }
 });
 
 //url Database API
@@ -52,10 +56,7 @@ app.get('/urls.json', (req, res) => {
 
 // urls page
 app.get('/urls', (req, res) => {
-  const templateVars = {
-    user: userEmail,
-    urls: userBase,
-  };
+
   console.log("check: ", req.session.username);
   if (!req.session.username) {
     res.redirect('/login?alert=true');
@@ -63,12 +64,17 @@ app.get('/urls', (req, res) => {
   const currUser = req.session.username;
   console.log(currUser);
   if (currUser) {
+
     var userEmail = users[currUser].email;
     var userBase = getUrls(currUser);
     console.log('userbase: ', userBase);
   } else {
     var userEmail = "";
   }
+  const templateVars = {
+    user: userEmail,
+    urls: userBase,
+  };
   console.log('email:', userEmail);
   res.render('urls_index', templateVars);
 });
@@ -143,7 +149,7 @@ app.post('/login', (req, res) => {
   console.log('login: ', user[0]);
   if (bcrypt.compareSync(req.body.password, users[user[0]].password)) {
     req.session.username = user[0];
-    console.log('success!');
+    console.log('success!', req.session.username);
   }
   res.redirect('/urls');
 });
@@ -173,6 +179,16 @@ app.post('/urls', (req, res) => {
 app.post('/urls/:shortURL', (req, res) => {
   urlDatabase[req.params.shortURL].url = req.body.longURL;
   res.redirect('/urls')
+});
+
+app.post('/urls/:shortURL/delete', (req, res) => {
+
+  if (req.session.username) {
+    delete urlDatabase[req.params.shortURL];
+    res.redirect('/urls');
+  } else {
+    res.redirect('/login?alert=true');
+  }
 });
 
 //Spin up server
