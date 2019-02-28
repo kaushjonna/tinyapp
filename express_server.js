@@ -111,6 +111,7 @@ app.get('/urls/:shortURL', (req, res) => {
 app.get('/register', (req, res) => {
   const templateVars = {
     user: false,
+    emptyfield: req.query.emptyfield
   };
   res.render('login_registration', templateVars);
 });
@@ -120,6 +121,7 @@ app.get('/login', (req, res) => {
   const templateVars = {
     user: '',
     alert: req.query.alert,
+    credAuthFail: req.query.credauthfail
   };
   res.render('login', templateVars);
 });
@@ -134,20 +136,25 @@ app.get('/u/:shortURL', (req, res) => {
 // POST Handlers
 //Register Post, creates a user and stores it in the database. proceeds to redirect to login page.
 app.post('/register', (req, res) => {
-  const genId = userID();
-  users[genId] = {};
-  users[genId].id = genId;
-  users[genId].email = req.body.email;
-  users[genId].password = bcrypt.hashSync(req.body.password, 10);
-  console.log('users: ', users)
-  res.redirect('/login');
+  if (req.body.password === "" || req.body.email === "") {
+    res.redirect('/register?emptyfield=true');
+  } else {
+    const genId = userID();
+    users[genId] = {};
+    users[genId].id = genId;
+    users[genId].email = req.body.email;
+    users[genId].password = bcrypt.hashSync(req.body.password, 10);
+    console.log('users: ', users)
+    res.redirect('/login');
+  }
 });
 
 //Login Post verifies password and sets session cookie upon successful login.
 app.post('/login', (req, res) => {
   const user = getID(req.body.email);
-  console.log('login: ', user[0]);
-  if (bcrypt.compareSync(req.body.password, users[user[0]].password)) {
+  if (user[0] === undefined) {
+    res.redirect('/login?credauthfail=true')
+  } else if (bcrypt.compareSync(req.body.password, users[user[0]].password)) {
     req.session.username = user[0];
     console.log('success!', req.session.username);
   }
